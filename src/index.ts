@@ -1,8 +1,8 @@
 import Fastify from "fastify";
 const fastify = Fastify({
   logger: {
-    level : "",
-  }
+    level: "",
+  },
 });
 
 fastify.get("/", (req, reply) => {
@@ -17,11 +17,12 @@ fastify.route({
   url: "/hello/:name", // مسیر روت ، "نام" یک پارامتر است
   // اسکیما یا قالب برای اعتبارسنجی ورودی‌ها و خروجی‌های این روت
   schema: {
-    querystring :{
-        properties : {
-            lastName : {type : "string"}
-        },
-        required : ['lastName']
+    querystring: {
+      type: "object",
+      properties: {
+        lastName: { type: "string" },
+      },
+      required: ["lastName"],
     },
     // قالب پارامترهای ورودی (در اینجا فقط یک پارامتر بنام "نام" است
     params: {
@@ -31,7 +32,7 @@ fastify.route({
         //  پارامتری از نوع (رشته) است
         name: {
           type: "string",
-            pattern: "^[A-Za-z]+$", // فقط حروف الفبایی
+          pattern: "^[A-Za-z]+$", // فقط حروف الفبایی
         },
       },
       required: ["name"], //: مشخص می‌کند که پارامتر نام الزامی است.
