@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 const fastify = Fastify({
   logger: {
-    level : ""
+    level : "",
   }
 });
 
@@ -14,18 +14,24 @@ fastify.get("/", (req, reply) => {
 //امکانات بیشتر میده
 fastify.route({
   method: "GET", // نوع  درخواست
-  url: "/hello/:name", // مسیر روت ، نام یک پارامتر است
+  url: "/hello/:name", // مسیر روت ، "نام" یک پارامتر است
   // اسکیما یا قالب برای اعتبارسنجی ورودی‌ها و خروجی‌های این روت
   schema: {
-    // قالب پارامترهای ورودی (در اینجا فقط یک پارامتر بنام نام است
+    querystring :{
+        properties : {
+            lastName : {type : "string"}
+        },
+        required : ['lastName']
+    },
+    // قالب پارامترهای ورودی (در اینجا فقط یک پارامتر بنام "نام" است
     params: {
       type: "object", // تعیین می‌کند که پارامترها باید یک آبجکت باشند.
-      //ویژگی‌های آبجکت پارامتره
+      //ویژگی‌های آبجکت پارامتر
       properties: {
         //  پارامتری از نوع (رشته) است
         name: {
           type: "string",
-          //   pattern: "^[A-Za-z]+$", // فقط حروف الفبایی
+            pattern: "^[A-Za-z]+$", // فقط حروف الفبایی
         },
       },
       required: ["name"], //: مشخص می‌کند که پارامتر نام الزامی است.
@@ -37,7 +43,7 @@ fastify.route({
         type: "object", //  پاسخ باید یک آبجکت باشد.
         //  ویژگی‌های این آبجکت پاسخ.
         properties: {
-          message: { type: "string" }, //ین ویژگی باید از نوع رشته باشد.
+          message: { type: "string" }, //این ویژگی باید از نوع رشته باشد
         },
         required: ["message"], // درخواست : ["پیام"]: مشخص می‌کند که ویژگی پیام باید حتماً در پاسخ وجود داشته باشد
       },
@@ -47,7 +53,7 @@ fastify.route({
     //   const name = (req.params as { name: string }).name;
     return {
       //@ts-ignore
-      message: `Hello ${req.params.name}`,
+      message: `Hello ${req.params.name} ${req.query.lastName}`,
     };
   },
 });
