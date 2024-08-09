@@ -1,15 +1,14 @@
 import Fastify from "fastify";
+import greetingsController from './greetings-controller';
+
 const fastify = Fastify({
   logger: {
     level: "",
   },
 });
 
-fastify.get("/", (req, reply) => {
-  return {
-    message: "hello world",
-  };
-});
+fastify.register(greetingsController , {prefix : "/greetings"})
+
 
 //امکانات بیشتر میده
 fastify.route({
